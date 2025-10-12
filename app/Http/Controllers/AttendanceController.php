@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Attendance;
+use App\Models\Employee;
+use Illuminate\Http\Request;
+
+class AttendanceController extends Controller
+{
+    // MENAMPILKAN SEMUA DATA ABSENSI
+    public function index()
+    {
+        $attendances = Attendance::with('employee')->latest()->paginate(15);
+        return view('attendances.index', compact('attendances'));
+    }
+
+    // MENAMPILKAN FORM TAMBAH
+    public function create()
+    {
+        $employees = Employee::all();
+        return view('attendances.create', compact('employees'));
+    }
+
+    // MENYIMPAN DATA BARU
+    public function store(Request $request)
+    {
+        $request->validate([
+            'karyawan_id' => 'required|exists:employees,id',
+            'tanggal' => 'required|date',
+            'waktu_masuk' => 'required|date_format:H:i',
+            'waktu_keluar' => 'nullable|date_format:H:i|after:waktu_masuk',
+            'status_absensi' => 'required|in:hadir,izin,sakit,alpha',
+        ]);
+
+        Attendance::create($request->all());
+
+        return redirect()->route('attendances.index')->with('success', 'Data absensi berhasil ditambahkan.');
+    }
+
+    // MENAMPILKAN FORM EDIT
+    public function edit(Attendance $attendance)
+    {
+        $employees = Employee::all();
+        return view('attendances.edit', compact('attendance', 'employees'));
+    }
+
+    // MENGUPDATE DATA
+    public function update(Request $request, Attendance $attendance)
+    {
+        $request->validate([
+            'karyawan_id' => 'required|exists:employees,id',
+            'tanggal' => 'required|date',
+            'waktu_masuk' => 'required|date_format:H:i',
+            'waktu_keluar' => 'nullable|date_format:H:i|after:waktu_masuk',
+            'status_absensi' => 'required|in:hadir,izin,sakit,alpha',
+        ]);
+
+        $attendance->update($request->all());
+
+        return redirect()->route('attendances.index')->with('success', 'Data absensi berhasil diperbarui.');
+    }
+
+    // MENGHAPUS DATA
+    public function destroy(Attendance $attendance)
+    {
+        $attendance->delete();
+        return redirect()->route('attendances.index')->with('success', 'Data absensi berhasil dihapus.');
+    }
+}

@@ -2,9 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\SalaryController;
 
-// Route ini sudah mencakup halaman untuk menampilkan semua data (index)
-Route::resource('employees', EmployeeController::class);
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('employees.index');
 });
+
+// Membuat semua route CRUD untuk masing-masing resource
+Route::resource('employees', EmployeeController::class);
+Route::resource('departments', DepartmentController::class);
+Route::resource('positions', PositionController::class);
+Route::resource(name: 'attendances', controller: AttendanceController::class);
+Route::resource(name:'salaries',controller: SalaryController::class);

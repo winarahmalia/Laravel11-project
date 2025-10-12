@@ -1,48 +1,102 @@
-<h2>Edit Data Pegawai</h2>
-<form action="{{ route('employees.update', $employee->id) }}" method="POST">
-@csrf
-@method('PUT')
-<table>
-<tr>
-<td>Nama Lengkap</td>
-<td><input type="text" name="name_lengkap" value="{{ old('name_lengkap', $employee->name_lengkap) }}"></td>
-</tr>
-<tr>
-<td>Email</td>
-<td><input type="email" name="email" value="{{ old('email', $employee->email) }}"></td>
-</tr>
-<tr>
-<td>Nomor Telepon</td>
-<td><input type="text" name="nomor_telepon" value="{{ old('nomor_telepon', $employee->nomor_telepon) }}"></td>
-</tr>
-<tr>
-<td>Tanggal Lahir</td>
-<td><input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $employee->tanggal_lahir) }}"></td>
-</tr>
-<tr>
-<td>Alamat</td>
-<td><input type="text" name="alamat" value="{{ old('alamat', $employee->alamat) }}"></td>
-</tr>
-<tr>
-<td>Tanggal Masuk</td>
-<td><input type="date" name="tanggal_masuk" value="{{ old('tanggal_masuk', $employee->tanggal_masuk) }}"></td>
-</tr>
-<tr>
-<td>Status</td>
-<td>
-<select name="status">
-<option value="aktif" {{ old('status', $employee->status) == 'aktif' ? 'selected' : '' }}>Aktif</option>
-<option value="tidak aktif" {{ old('status', $employee->status) == 'tidak aktif' ? 'selected' : '' }}>Tidak
+@extends('master')
+@section('title', 'Edit Data Pegawai')
 
-Aktif</option>
+@section('content')
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Edit Data Pegawai: {{ $employee->name_lengkap }}</h3>
+    </div>
+    <div class="card-body">
+        <form action="{{ route('employees.update', $employee->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-</select>
-</td>
-</tr>
-<tr>
-<td colspan="2">
-<button type="submit">Update</button>
-</td>
-</tr>
-</table>
-</form>
+            {{-- NAMA LENGKAP --}}
+            <div class="mb-3">
+                <label for="name_lengkap" class="form-label">Nama Lengkap</label>
+                <input type="text" name="name_lengkap" class="form-control @error('name_lengkap') is-invalid @enderror" value="{{ old('name_lengkap', $employee->name_lengkap) }}" required>
+                @error('name_lengkap')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- EMAIL --}}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $employee->email) }}" required>
+                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- NOMOR TELEPON --}}
+            <div class="mb-3">
+                <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
+                <input type="text" name="nomor_telepon" class="form-control @error('nomor_telepon') is-invalid @enderror" value="{{ old('nomor_telepon', $employee->nomor_telepon) }}" required>
+                @error('nomor_telepon')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- TANGGAL LAHIR --}}
+            <div class="mb-3">
+                <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                <input type="date" name="tanggal_lahir" class="form-control @error('tanggal_lahir') is-invalid @enderror" value="{{ old('tanggal_lahir', $employee->tanggal_lahir) }}" required>
+                @error('tanggal_lahir')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- ALAMAT --}}
+            <div class="mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" required>{{ old('alamat', $employee->alamat) }}</textarea>
+                @error('alamat')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- TANGGAL MASUK --}}
+            <div class="mb-3">
+                <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
+                <input type="date" name="tanggal_masuk" class="form-control @error('tanggal_masuk') is-invalid @enderror" value="{{ old('tanggal_masuk', $employee->tanggal_masuk) }}" required>
+                @error('tanggal_masuk')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- STATUS --}}
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select name="status" class="form-select @error('status') is-invalid @enderror" required>
+                    <option value="aktif" {{ old('status', $employee->status) == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                    <option value="nonaktif" {{ old('status', $employee->status) == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                </select>
+                @error('status')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- DEPARTEMEN --}}
+            <div class="mb-3">
+                <label for="department_id" class="form-label">Departemen</label>
+                <select name="department_id" class="form-select @error('department_id') is-invalid @enderror" required>
+                    <option value="">Pilih Departemen</option>
+                    @foreach ($departments as $department)
+                        <option value="{{ $department->id }}" {{ old('department_id', $employee->department_id) == $department->id ? 'selected' : '' }}>
+                            {{ $department->nama_departments }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('department_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            {{-- JABATAN --}}
+            <div class="mb-3">
+                <label for="jabatan_id" class="form-label">Jabatan</label>
+                <select name="jabatan_id" class="form-select @error('jabatan_id') is-invalid @enderror" required>
+                    <option value="">Pilih Jabatan</option>
+                    @foreach ($positions as $position)
+                        <option value="{{ $position->id }}" {{ old('jabatan_id', $employee->jabatan_id) == $position->id ? 'selected' : '' }}>
+                            {{ $position->nama_jabatan }}
+                        </option>
+                    @endforeach
+                </select>
+                {{-- KESALAHAN SINTAKS ADA DI SINI, SEKARANG SUDAH DIPERBAIKI --}}
+                @error('jabatan_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{ route('employees.index') }}" class="btn btn-secondary">Batal</a>
+        </form>
+    </div>
+</div>
+@endsection
