@@ -7,23 +7,19 @@
     <div class="card-body">
         <form action="{{ route('employees.store') }}" method="POST">
             @csrf
-            {{-- NAMA LENGKAP --}}
+         
             <div class="mb-3">
                 <label for="name_lengkap" class="form-label">Nama Lengkap</label>
                 <input type="text" name="name_lengkap" class="form-control @error('name_lengkap') is-invalid @enderror" value="{{ old('name_lengkap') }}" required>
                 @error('name_lengkap')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- EMAIL --}}
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
                 @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- =================== BAGIAN YANG HILANG DIMULAI DI SINI =================== --}}
-
-            {{-- NOMOR TELEPON --}}
             <div class="mb-3">
                 <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
                 <input type="text" name="nomor_telepon" class="form-control @error('nomor_telepon') is-invalid @enderror" value="{{ old('nomor_telepon') }}" required>
@@ -37,23 +33,18 @@
                 @error('tanggal_lahir')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- ALAMAT --}}
             <div class="mb-3">
                 <label for="alamat" class="form-label">Alamat</label>
                 <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" required>{{ old('alamat') }}</textarea>
                 @error('alamat')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- TANGGAL MASUK --}}
             <div class="mb-3">
                 <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
                 <input type="date" name="tanggal_masuk" class="form-control @error('tanggal_masuk') is-invalid @enderror" value="{{ old('tanggal_masuk') }}" required>
                 @error('tanggal_masuk')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- =================== BAGIAN YANG HILANG SELESAI =================== --}}
-
-            {{-- STATUS --}}
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select name="status" class="form-select @error('status') is-invalid @enderror">
@@ -63,7 +54,6 @@
                 @error('status')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- DEPARTEMEN --}}
             <div class="mb-3">
                 <label for="department_id" class="form-label">Departemen</label>
                 <select name="department_id" class="form-select @error('department_id') is-invalid @enderror" required>
@@ -77,7 +67,6 @@
                 @error('department_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- JABATAN --}}
             <div class="mb-3">
                 <label for="jabatan_id" class="form-label">Jabatan</label>
                 <select name="jabatan_id" class="form-select @error('jabatan_id') is-invalid @enderror" required>

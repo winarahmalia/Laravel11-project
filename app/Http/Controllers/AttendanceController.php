@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
@@ -8,14 +7,11 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    // MENAMPILKAN SEMUA DATA ABSENSI
     public function index()
     {
         $attendances = Attendance::with('employee')->latest()->paginate(15);
         return view('attendances.index', compact('attendances'));
     }
-
-    // MENAMPILKAN FORM TAMBAH
     public function create()
     {
         $employees = Employee::all();
@@ -38,14 +34,12 @@ class AttendanceController extends Controller
         return redirect()->route('attendances.index')->with('success', 'Data absensi berhasil ditambahkan.');
     }
 
-    // MENAMPILKAN FORM EDIT
     public function edit(Attendance $attendance)
     {
         $employees = Employee::all();
         return view('attendances.edit', compact('attendance', 'employees'));
     }
 
-    // MENGUPDATE DATA
     public function update(Request $request, Attendance $attendance)
     {
         $request->validate([
@@ -61,7 +55,6 @@ class AttendanceController extends Controller
         return redirect()->route('attendances.index')->with('success', 'Data absensi berhasil diperbarui.');
     }
 
-    // MENGHAPUS DATA
     public function destroy(Attendance $attendance)
     {
         $attendance->delete();

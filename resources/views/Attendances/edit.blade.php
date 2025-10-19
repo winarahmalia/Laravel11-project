@@ -9,7 +9,6 @@
             @csrf
             @method('PUT')
 
-            {{-- NAMA KARYAWAN --}}
             <div class="mb-3">
                 <label for="karyawan_id" class="form-label">Nama Karyawan</label>
                 <select name="karyawan_id" class="form-select @error('karyawan_id') is-invalid @enderror" required>
@@ -23,7 +22,6 @@
                 @error('karyawan_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
-            {{-- TANGGAL --}}
             <div class="mb-3">
                 <label for="tanggal" class="form-label">Tanggal</label>
                 <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal', $attendance->tanggal) }}" required>

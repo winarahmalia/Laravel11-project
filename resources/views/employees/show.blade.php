@@ -8,7 +8,6 @@
     </div>
     <div class="card-body">
         <div class="row">
-            {{-- KOLOM KIRI: DATA PRIBADI --}}
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Nama Lengkap:</label>
@@ -32,16 +31,13 @@
                 </div>
             </div>
 
-            {{-- KOLOM KANAN: DATA PEKERJAAN --}}
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Departemen:</label>
-                    {{-- Menampilkan nama departemen dari relasi --}}
                     <p>{{ $employee->department->nama_departments ?? 'N/A' }}</p>
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-bold">Jabatan:</label>
-                    {{-- Menampilkan nama jabatan dari relasi --}}
                     <p>{{ $employee->position->nama_jabatan ?? 'N/A' }}</p>
                 </div>
                 <div class="mb-3">
